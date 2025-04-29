@@ -1,0 +1,45 @@
+<h1 id="event-title">Loading...</h1>
+
+<div id="event-info">
+  <p><strong>Description:</strong> <span id="event-description"></span></p>
+  <p><strong>Date:</strong> <span id="event-date"></span></p>
+  <p><strong>Category:</strong> <span id="event-category"></span></p>
+  <p><strong>Capacity:</strong> <span id="event-capacity"></span></p>
+</div>
+
+<div id="event-buttons">
+  <button id="rsvp-btn">RSVP / Cancel</button>
+  <button id="like-btn">Like</button>
+  <button id="save-btn">Save</button>
+</div>
+
+<h2>Comments</h2>
+<div id="comments-container">
+  {{! Comments will be loaded here }}
+</div>
+
+<form id="comment-form">
+  <textarea
+    id="comment-text"
+    placeholder="Write a comment..."
+    required
+  ></textarea>
+  <button type="submit">Post Comment</button>
+</form>
+
+<h2>Reviews</h2>
+<div id="reviews-container">
+  {{! Reviews will be loaded here }}
+</div>
+
+<form id="review-form">
+  <label for="rating">Rating (1-5):</label>
+  <input type="number" id="rating" min="1" max="5" required />
+
+  <label for="review-text">Review:</label>
+  <textarea id="review-text" required></textarea>
+
+  <button type="submit">Submit Review</button>
+</form>
+
+<script src="/public/js/eventDetails.js"></script>
