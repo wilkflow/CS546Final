@@ -4,9 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createContext, useContext } from 'react';
-import {users} from './config/mongoCollections';
 
-const ucoll = createContext(users)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

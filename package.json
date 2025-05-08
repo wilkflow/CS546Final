@@ -1,0 +1,26 @@
+{
+  "name": "cs546final",
+  "version": "1.0.0",
+  "description": "Final proj for da 546",
+  "main": "mong.js",
+  "scripts": {
+    "start": "node mong.js"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oldmansavva/CS546Final.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oldmansavva/CS546Final/issues"
+  },
+  "homepage": "https://github.com/oldmansavva/CS546Final#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mongoose": "^8.14.1"
+  }
+}
