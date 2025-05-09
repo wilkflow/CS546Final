@@ -7,7 +7,7 @@ postForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
     const text = postText.value.trim();
-    if(!text || text.length === 0) return alert("Cannot add an empty post!");
+    if(!text) return alert("Cannot add an empty post!");
 
     const requestConfig = {
         method: "POST",
@@ -56,7 +56,7 @@ function addComment(event){
     const postId = commentForm.closest(".post-item").dataset.postId;
 
     const comment = commentInput.value.trim();
-    if(!comment || comment.length === 0) return alert("Comment cannot be empty!");
+    if(!comment) return alert("Comment cannot be empty!");
 
     const requestConfig = {
         method: 'POST',
