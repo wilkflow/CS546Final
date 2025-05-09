@@ -1,5 +1,3 @@
-//TODO: Add imports
-
 //Errors
 const errorText = document.getElementById("friends-error");
 errorText.style.display = 'none';
