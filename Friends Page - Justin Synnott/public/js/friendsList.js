@@ -16,7 +16,7 @@ addForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const username = friendInput.value.trim();
-    if(!username || username.length === 0) return displayError("Enter Friend's Username to add them!");
+    if(!username) return displayError("Enter Friend's Username to add them!");
 
     const requestConfig = {
         method: 'POST',
@@ -44,7 +44,7 @@ addForm.addEventListener('submit', (event) => {
         const removeForm = li.querySelector('.remove-friend');
         removeForm.addEventListener('submit', removeFriend);
 
-    });
+    }).catch(() => displayError("Network error while adding friend."));
 });
 
 //Remove Friend
@@ -64,7 +64,7 @@ function removeFriend(event){
         if(!response.ok) return displayError("Failed to Remove Friend");
 
         removeForm.closest('.friend-item').remove();
-    });
+    }).catch(() => displayError("Network error while removing friend."));
 };
 
 document.querySelectorAll('.remove-friend').forEach(removeForm => {
