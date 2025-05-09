@@ -1,8 +1,8 @@
-//Adding Posts
 const postForm = document.getElementById("post-form");
 const postText = document.getElementById("post-text");
 const postFeed = document.querySelector(".posts-feed");
 
+//Adding Posts
 postForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -41,7 +41,10 @@ postForm.addEventListener("submit", (event) => {
         const commentForm = postDiv.querySelector(".comment-form");
         commentForm.addEventListener("submit", addComment);
 
-    });
+        const likeButton = postDiv.querySelector(".like-button");
+        likeButton.addEventListener("click", likePost);
+
+    }).catch(() => alert("Network error while adding post"));
 });
 
 //Adding Comments
@@ -74,9 +77,34 @@ function addComment(event){
         comments.appendChild(commentDiv);
         commentInput.value = "";
 
-    });
+    }).catch(() => alert("Network error while adding comment"));
 };
 
 document.querySelectorAll(".comment-form").forEach(form => {
     form.addEventListener("submit", addComment);
+});
+
+//Like Posts
+function likePost(event){
+    const likeButton = event.target;
+    const postDiv = likeButton.closest(".post-item");
+    const postId = postDiv.dataset.postId;
+
+    const requestConfig = {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({postId})
+    }
+    fetch("/friends/like", requestConfig).then(async (response) => {
+        if (!response.ok) return alert("Failed to like post");
+
+        const data = await response.json();
+        const likesText = postDiv.querySelector(".post-likes");
+        likesText.textContent = `Current Likes: ${data.likes}`;
+        
+    }).catch(() => alert("Network error while liking post"));
+};
+
+document.querySelectorAll(".like-button").forEach(button => {
+    button.addEventListener("click", likePost);
 });
