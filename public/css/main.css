@@ -1,7 +1,29 @@
 body {
   text-align: center;
+  width: 100%;
+  height: 100vh;
 }
 
 .error {
   color: red;
 }
+
+.profile-main{
+  width: 100%;
+  height: 100vh;
+  background-image: url(/public/assets/community-image.png);
+}
+.welcome-note{
+  width: 100%;
+  height: 20%;
+  background-color: rgb(127, 217, 187);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* .privateText{
+  
+ 
+} */
