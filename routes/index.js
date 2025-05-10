@@ -1,11 +1,12 @@
-//Here you will import route files and export the constructor method as shown in lecture code and worked in previous labs.
-
-
-import authRoutes from './auth_routes.js';
+import users from './users.js';
+import prof from './profile.js'
 
 const constructorMethod = (app) => {
-    app.use(authRoutes);
-  
+    app.use("/", users);
+    app.use(prof);
+    app.use(/(.*)/, (req, res) => {
+        res.sendStatus(404);
+    });
 };
-  
+
 export default constructorMethod;

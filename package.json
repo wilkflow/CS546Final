@@ -4,7 +4,7 @@
   "description": "Final proj for da 546",
   "main": "mong.js",
   "scripts": {
-    "start": "node mong.js"
+    "start": "node app.js"
   },
   "type": "module",
   "repository": {
@@ -19,8 +19,11 @@
   },
   "homepage": "https://github.com/oldmansavva/CS546Final#readme",
   "dependencies": {
-    "cors": "^2.8.5",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
     "express": "^5.1.0",
-    "mongoose": "^8.14.1"
+    "express-handlebars": "^8.0.2",
+    "express-session": "^1.18.1",
+    "mongodb": "^6.16.0"
   }
 }
