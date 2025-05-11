@@ -1,11 +1,4 @@
-//Errors
-const errorText = document.getElementById("friends-error");
-errorText.style.display = 'none';
-
-function displayError(text) {
-    errorText.innerHTML = text;
-    errorText.style.display = 'block';
-};
+//TODO: Add checking so existing friends cannot be added
 
 //Add Friend Handler
 const addForm = document.getElementById("add-friend");
@@ -16,7 +9,7 @@ addForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const username = friendInput.value.trim();
-    if(!username) return displayError("Enter Friend's Username to add them!");
+    if(!username) return alert("Enter Friend's Username to add them!");
 
     const requestConfig = {
         method: 'POST',
@@ -24,7 +17,7 @@ addForm.addEventListener('submit', (event) => {
         body: JSON.stringify({username})
     };
     fetch('/friends/add', requestConfig).then(async (response) => {
-        if(!response.ok) return displayError("Failed to Add Friend");
+        if(!response.ok) return alert("Failed to Add Friend");
 
         const newFriend = await response.json();
         friendInput.value = '';
@@ -44,7 +37,7 @@ addForm.addEventListener('submit', (event) => {
         const removeForm = li.querySelector('.remove-friend');
         removeForm.addEventListener('submit', removeFriend);
 
-    }).catch(() => displayError("Network error while adding friend."));
+    }).catch(() => alert("Network error while adding friend."));
 });
 
 //Remove Friend
@@ -61,10 +54,10 @@ function removeFriend(event){
         body: JSON.stringify({friendId})
     };
     fetch('/friends/remove', requestConfig).then(async (response) => {
-        if(!response.ok) return displayError("Failed to Remove Friend");
+        if(!response.ok) return alert("Failed to Remove Friend");
 
         removeForm.closest('.friend-item').remove();
-    }).catch(() => displayError("Network error while removing friend."));
+    }).catch(() => alert("Network error while removing friend."));
 };
 
 document.querySelectorAll('.remove-friend').forEach(removeForm => {
