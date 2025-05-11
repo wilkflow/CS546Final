@@ -4,7 +4,7 @@ const router = Router();
 router.get("/events", async (req, res) => {
     if (req.session.user) {
         let events = await getAllEvents()
-        console.log(events)
+        //console.log(events)
         res.status(200).json(events);
     }else{
         //TODO reroute

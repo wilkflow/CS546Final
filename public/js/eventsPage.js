@@ -17,12 +17,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const loadEvents = async () => {
   const res = await fetch("/events");
+  
   const events = await res.json();
-
+  //console.log(events)
   const table_body = document.getElementById("events-table-body");
   table_body.innerHTML = "";
 
-  events.array.forEach((event) => {
+  events.forEach((event) => {
     table_body.appendChild(renderEvent(event));
   });
 
