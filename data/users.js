@@ -20,6 +20,15 @@ const createUser = async (username, password) => {
     }
     password = await bcrypt.hash(password, saltRounds);
     let newUser = {
+        userPosts: [],
+        userLikes: [],
+        userComments: [],
+        gender: '',
+        firstName: 'John',
+        lastName: 'Doe',
+        city: '',
+        state: '',
+        age: '',
         username: usernameLowerCase,
         password
     };

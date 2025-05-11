@@ -37,19 +37,21 @@ const validateForm = () => {
   }
   // add in valid checks for date and all the strings:
   //TODO
+  return {title, description, category, date, capacity}
 };
 
 async function submitForm(e) {
   e.preventDefault();
 
   try {
-    validateForm();
+    valdat = validateForm();
+    console.log(valdat)
   } catch (error) {
     document.getElementById("error-message").textContent = error.message;
     return;
   }
-
-  const eventId = document.getElementById("event-id")?.value; //only get .value if it exists
+  //PLEASE ADD AN OPTION FOR FRIENDS ONLY
+  const eventId = document.getElementById("event-id")?.value; //only get .value if it exists  
   const newEvent = {
     title: document.getElementById("title").value.trim(),
     description: document.getElementById("description").value.trim(),
@@ -59,14 +61,13 @@ async function submitForm(e) {
   };
 
   const url = eventId ? `/events/${eventId}` : "/events";
-
   await fetch(url, {
     method: eventId ? "PUT" : "POST", //make and put new if eventId exists, otherwise, post
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newEvent),
   });
 
-  window.location.href = "/events";
+  window.location.href = "/events_feed";
 }
 
 async function loadEventEdit() {
