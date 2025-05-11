@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const loadEvents = async () => {
   const res = await fetch("/events");
-  
+
   const events = await res.json();
   //console.log(events)
   const table_body = document.getElementById("events-table-body");
@@ -36,7 +36,10 @@ const renderEvent = (event) => {
   tr.dataset.id = event._id;
 
   tr.innerHTML = `<td>${event.title}</td>
-  <td>${new Date(event.date).toLocaleString()}</td>
+  <td>${new Date(event.eventDate).toLocaleString("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  })}</td>
   <td>${event.category}</td>
   <td>${event.attendees.length}/${event.maxCapacity}</td>
   <td><button class="view-btn">View</button></td>`;

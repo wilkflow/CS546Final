@@ -19,45 +19,53 @@ const validateForm = () => {
   const description = document.getElementById("description").value.trim();
   const category = document.getElementById("category").value.trim();
   const date = document.getElementById("date").value.trim();
-  const capacity = document.getElementById("max-capacity").value.trim();
-
-  if (!title || !description || !category || !date || !capacity) {
+  const capacityRaw = document.getElementById("max-capacity").value.trim();
+  const friendsOnly = document.getElementById("friends-only").checked;
+  if (!title || !description || !category || !date || !capacityRaw) {
     throw "All fields must be filled.";
   }
-  if (title === undefined || title === null) throw "Title must be filled";
-  if (description === undefined || description === null)
-    throw "Description must be filled";
-  if (category === undefined || category === null)
-    throw "Category must be filled";
-  if (date === undefined || date === null) throw "Date must be filled";
-  if (capacity === undefined || capacity === null)
-    throw "Capacity must be filled";
-  if (isNaN(capacity) || capacity <= 0) {
-    throw "Capacity must be a positive number";
-  }
-  // add in valid checks for date and all the strings:
-  //TODO
-  return {title, description, category, date, capacity}
+
+  //string validations
+  if (typeof title !== "string" || title.length < 3)
+    throw "Title must be at least 3 characters.";
+  if (typeof description !== "string" || description.length < 10)
+    throw "Description must be at least 10 characters.";
+  if (typeof category !== "string" || category.length < 3)
+    throw "Category must be at least 3 characters.";
+
+  //capacity validation
+  const capacity = parseInt(capacityRaw, 10);
+  if (isNaN(capacity) || capacity <= 0)
+    throw "Capacity must be a positive whole number.";
+
+  //date validation
+  const eventDate = new Date(date);
+  const now = new Date();
+  if (isNaN(eventDate.getTime()))
+    throw "Invalid date format. Please provide a valid date.";
+  if (eventDate < now) throw "Event date must be in the future.";
+
+  return { title, description, category, date, capacity, friendsOnly };
 };
 
 async function submitForm(e) {
   e.preventDefault();
-
+  let valdat;
   try {
     valdat = validateForm();
-    console.log(valdat)
   } catch (error) {
+    alert(error);
     document.getElementById("error-message").textContent = error.message;
     return;
   }
-  //PLEASE ADD AN OPTION FOR FRIENDS ONLY
-  const eventId = document.getElementById("event-id")?.value; //only get .value if it exists  
+  const eventId = document.getElementById("event-id")?.value; //only get .value if it exists
   const newEvent = {
-    title: document.getElementById("title").value.trim(),
-    description: document.getElementById("description").value.trim(),
-    category: document.getElementById("category").value.trim(),
-    date: document.getElementById("date").value.trim(),
-    maxCapacity: parseInt(document.getElementById("max-capacity").value.trim()),
+    title: valdat.title,
+    description: valdat.description,
+    category: valdat.category,
+    date: valdat.date,
+    maxCapacity: valdat.capacity,
+    friendsOnly: valdat.friendsOnly,
   };
 
   const url = eventId ? `/events/${eventId}` : "/events";
@@ -74,12 +82,13 @@ async function loadEventEdit() {
   const eventId = document.getElementById("event-id")?.value;
   if (!eventId) return;
 
-  const res = await fetch(`/events/${eventId}`);
+  const res = await fetch(`/events/${eventId}/data`);
   const event = await res.json();
 
   document.getElementById("title").value = event.title;
   document.getElementById("description").value = event.description;
   document.getElementById("category").value = event.category;
-  document.getElementById("date").value = event.date.split(".")[0];
+  document.getElementById("date").value = new Date(event.date).toLocaleString();
   document.getElementById("max-capacity").value = event.maxCapacity;
+  document.getElementById("friends-only").checked = event.friendsOnly === true;
 }

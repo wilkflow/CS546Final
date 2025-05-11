@@ -1,21 +1,30 @@
-<h1 id="event-title">Loading...</h1>
+<h1 id="event-title">{{edata.title}}</h1>
 
 <div id="event-info">
-  <p><strong>Description:</strong>{{edata.body}} <span id="event-description"></span></p>
-  <p><strong>Date:</strong> <span id="event-date"></span></p>
-  <p><strong>Category:</strong> <span id="event-category"></span></p>
-  <p><strong>Capacity:</strong> <span id="event-capacity"></span></p>
+  <p><strong>Description:</strong>
+    <span id="event-description">{{edata.body}}</span></p>
+  <p><strong>Date:</strong> <span id="event-date">{{edata.date}}</span></p>
+  <p><strong>Category:</strong>
+    <span id="event-category">{{edata.category}}</span></p>
+  <p><strong>Capacity:</strong>
+    <span id="event-capacity">{{edata.attendees.length}}
+      /
+      {{edata.maxCapacity}}</span></p>
+  <p><strong>Likes:</strong>
+    <span id="like-count">{{edata.likes.length}}</span></p>
+  <p><strong>Visibility:</strong>
+    <span id="visibility">{{#if edata.friendsOnly}}Friends Only{{else}}Public{{/if}}</span></p>
+
 </div>
 
 <div id="event-buttons">
   <button id="rsvp-btn">RSVP / Cancel</button>
   <button id="like-btn">Like</button>
-  <button id="save-btn">Save</button>
 </div>
 
 <h2>Comments</h2>
 <div id="comments-container">
-  {{! Comments will be loaded here }}
+  {{! Comments will be loaded here. We use fetch for this one to make newly posted comments load in dynamically so the user doesn't have to refresh to see their own comment }}
 </div>
 
 <form id="comment-form">
@@ -29,7 +38,7 @@
 
 <h2>Reviews</h2>
 <div id="reviews-container">
-  {{! Reviews will be loaded here }}
+  {{! Reviews will be loaded here. We use fetch for this one to make newly posted reviews load in dynamically }}
 </div>
 
 <form id="review-form">

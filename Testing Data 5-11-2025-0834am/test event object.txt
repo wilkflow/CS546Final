@@ -1,0 +1,34 @@
+{
+  "_id": {
+    "$oid": "6820893d00ac598d9ef3c8bf"
+  },
+  "category": "Testing",
+  "title": "Test Event 1",
+  "body": "This is a simple test for events",
+  "postedDate": "Last Sync: 11/5/2025",
+  "eventDate": "2025-05-30T07:26",
+  "likes": [],
+  "comments": [
+    {
+      "user": "BrianOne",
+      "text": "Testing comment number 1"
+    },
+    {
+      "user": "BrianTwo",
+      "text": "Testing comment number 2"
+    }
+  ],
+  "rsvp": [],
+  "friendsOnly": false,
+  "reviews": [
+    {
+      "user": "BrianOne",
+      "text": "Testing review systems",
+      "rating": 5
+    }
+  ],
+  "attendees": [
+    "Brian"
+  ],
+  "maxCapacity": 10
+}

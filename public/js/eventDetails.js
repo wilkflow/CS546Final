@@ -2,14 +2,12 @@
 Event Information
 RSVP button
 Like button
-Save button
 Comments
 Ratings
 
 loadEventDetails()
 handleRSVP()
 handleLike()
-handleSave()
 loadComments()
 submitComment()
 loadReviews()
@@ -19,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loadEventDetails();
   document.getElementById("rsvp-btn").addEventListener("click", handleRSVP);
   document.getElementById("like-btn").addEventListener("click", handleLike);
-  document.getElementById("save-btn").addEventListener("click", handleSave);
   document
     .getElementById("comment-form")
     .addEventListener("submit", submitComment);
@@ -30,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const loadEventDetails = async () => {
   const eventId = window.location.pathname.split("/").pop();
-  const res = await fetch(`/event/${eventId}`);
+  const res = await fetch(`/events/${eventId}/data`);
   const event = await res.json();
 
   document.getElementById("event-title").textContent = event.title;
@@ -41,7 +38,11 @@ const loadEventDetails = async () => {
   document.getElementById("event-category").textContent = event.category;
   document.getElementById(
     "event-capacity"
-  ).textContent = `${event.attendees.length}/${event.maxCapacity}`;
+  ).textContent = `${event.attendees_count}/${event.maxCapacity}`;
+  document.getElementById("like-count").textContent = event.likes_count;
+  document.getElementById("visibility").textContent = event.friendsOnly
+    ? "Friends Only"
+    : "Public";
 
   loadComments();
   loadReviews();
@@ -50,28 +51,34 @@ const loadEventDetails = async () => {
 const handleRSVP = async () => {
   const eventId = window.location.pathname.split("/").pop();
   await fetch(`/events/${eventId}/rsvp`, { method: "POST" });
-  //loadEventDetails();
+  // window.location.reload(); //Option 1: Reload full page to update page after pressing
+  loadEventDetails(); //Option 2: Fetch call to NOT reload full page and directly update the UI elements dynamically
 };
 
-const handleSave = async () => {
+const handleLike = async () => {
   const eventId = window.location.pathname.split("/").pop();
-  await fetch(`/events/${eventId}/save`, { method: "POST" });
-  //loadEventDetails();
+  await fetch(`/events/${eventId}/like`, { method: "POST" });
+  // window.location.reload(); //Option 1: Reload full page to update page after pressing
+  loadEventDetails(); //Option 2: Fetch call to NOT reload full page and directly update the UI elements dynamically
 };
 
 const loadComments = async () => {
-  const eventId = window.location.pathname.split("/").pop();
-  const res = await fetch(`/events/${eventId}/comments`);
-  const comments = await res.json();
+  try {
+    const eventId = window.location.pathname.split("/").pop();
+    const res = await fetch(`/events/${eventId}/comments`);
+    const comments = await res.json();
 
-  const container = document.getElementById("comments-container");
-  container.innerHTML = "";
+    const container = document.getElementById("comments-container");
+    container.innerHTML = "";
 
-  comments.forEach((comment) => {
-    const p = document.createElement("p");
-    p.textContent = `${comment.user}: ${comment.text}`;
-    container.appendChild(p);
-  });
+    comments.forEach((comment) => {
+      const p = document.createElement("p");
+      p.textContent = `${comment.user}: ${comment.text}`;
+      container.appendChild(p);
+    });
+  } catch (e) {
+    alert(e);
+  }
 };
 
 const submitComment = async (e) => {
@@ -79,16 +86,29 @@ const submitComment = async (e) => {
   const eventId = window.location.pathname.split("/").pop();
   const commentText = document.getElementById("comment-text").value.trim();
 
-  if (!commentText) return;
-
-  await fetch(`/events/${eventId}/comments`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text: commentText }),
-  });
-
-  document.getElementById("comment-text").value = "";
-  loadComments();
+  //input check
+  if (!commentText) {
+    alert("Please enter a comment.");
+    return;
+  }
+  //Safeguard
+  try {
+    const res = await fetch(`/events/${eventId}/comments`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: commentText }),
+    });
+    if (!res.ok) {
+      const error = await res.json();
+      alert(error.error || "Failed to submit comment.");
+      return;
+    }
+    document.getElementById("comment-text").value = "";
+    loadComments();
+  } catch (err) {
+    console.error("Error submitting comment:", err);
+    alert("Something went wrong while submitting your comment.");
+  }
 };
 
 const loadReviews = async () => {
@@ -109,16 +129,36 @@ const loadReviews = async () => {
 const submitReview = async (e) => {
   e.preventDefault();
   const eventId = window.location.pathname.split("/").pop();
-  const rating = document.getElementById("rating").value;
+  const rating = parseInt(document.getElementById("rating").value, 10);
   const reviewText = document.getElementById("review-text").value.trim();
 
-  if (!rating || !reviewText) return;
+  // input checks
+  if (!reviewText) {
+    alert("Please enter review text.");
+    return;
+  }
 
-  await fetch(`/events/${eventId}/reviews`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ rating, text: reviewText }),
-  });
+  if (isNaN(rating) || rating < 1 || rating > 5) {
+    alert("Rating must be a number between 1 and 5.");
+    return;
+  }
 
-  loadReviews();
+  // try catch safeguard
+  try {
+    const res = await fetch(`/events/${eventId}/reviews`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ rating, text: reviewText }),
+    });
+    if (!res.ok) {
+      const error = await res.json();
+      alert(error.error || "Failed to submit review.");
+      return;
+    }
+    document.getElementById("review-text").value = "";
+    loadReviews();
+  } catch (err) {
+    console.error("Error submitting review:", err);
+    alert("Something went wrong while submitting your review.");
+  }
 };
