@@ -1,3 +1,5 @@
+//TODO: Add checking so existing friends cannot be added
+
 //Add Friend Handler
 const addForm = document.getElementById("add-friend");
 const friendInput = document.getElementById("friend-input");
