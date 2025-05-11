@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {createEvent, getAllEvents} from '../data/events.js';
+import {createEvent, getAllEvents, getEventById} from '../data/events.js';
 const router = Router();
 router.get("/events", async (req, res) => {
     if (req.session.user) {
@@ -33,4 +33,10 @@ router.post('/events', async (req, res) =>{
         //TODO reroute
     }
 })
+router.get('/events/:id', async (req, res) =>{
+    let eid = req.params.id;
+    const edat = await getEventById(eid);
+    res.status(200).render('events/eventDetails', {edata: edat});
+})
+
 export default router;

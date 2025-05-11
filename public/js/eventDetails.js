@@ -50,13 +50,13 @@ const loadEventDetails = async () => {
 const handleRSVP = async () => {
   const eventId = window.location.pathname.split("/").pop();
   await fetch(`/events/${eventId}/rsvp`, { method: "POST" });
-  loadEventDetails();
+  //loadEventDetails();
 };
 
 const handleSave = async () => {
   const eventId = window.location.pathname.split("/").pop();
   await fetch(`/events/${eventId}/save`, { method: "POST" });
-  loadEventDetails();
+  //loadEventDetails();
 };
 
 const loadComments = async () => {

@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import {events, users} from '../config/mongoCollections.js';
 
 const createEvent = async (category, title, description, friendsOnly, date, maxCapacity, userName) => {
@@ -45,4 +46,11 @@ const getAllEvents = async () =>{
     return allevents;
 }
 
-export {createEvent, getAllEvents};
+const getEventById = async (eventId) =>{
+    const eCol = await events();
+    console.log(eventId)
+    const cevent = await eCol.findOne({_id : new ObjectId(eventId)})
+    return cevent;
+}
+
+export {createEvent, getAllEvents, getEventById};
