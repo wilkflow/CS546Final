@@ -1,9 +1,9 @@
 import { Router } from "express";
 import {
-  events,
   createEvent,
   getAllEvents,
   getEventById,
+  updateEventAppend
 } from "../data/events.js";
 import { ObjectId } from "mongodb";
 const router = Router();
@@ -84,37 +84,26 @@ router.get("/events/:id/data", async (req, res) => {
 //  you can use this as starter code, or you can just scrap it and start from fresh
 router.post("/events/:id/rsvp", async (req, res) => {
   const eid = req.params.id;
-  const edat = await getEventById(eid);
-  if (!edat) {
-    return res.status(404).json({ error: "Event not found" });
-  }
-
-  const eCol = await events();
-  const userValue = "1";
-
-  let updatedAttendees;
-  if (edat.attendees.includes(userValue)) {
-    updatedAttendees = edat.attendees.filter((a) => a !== userValue);
-  } else {
-    updatedAttendees = [...edat.attendees, userValue];
-  }
-
-  const updateResult = await eCol.updateOne(
-    { _id: new ObjectId(eid) },
-    { $set: { attendees: updatedAttendees } }
-  );
+  const nedat = await updateEventAppend(eid, 'attendees', req.session.user);
 
   //todo: Check the res.status values and change the 200 and 500 if needed
-  if (updateResult.modifiedCount === 1) {
-    return res.status(200).json({ attendees: updatedAttendees });
-  } else {
+  if (!nedat) {
     return res.status(500).json({ error: "Failed to update attendees" });
+  } else {
+    return res.status(200).render("events/eventDetails", { edata: nedat });   
   }
 });
 
-router.post("/events/:id/rsvp", async (req, res) => {
-  //TODO: router.post for events/:id/like (Like button)
-  //    Button behaves as a toggle just like RSVP, so you can use similar logic to the RSVP code above
+router.post("/events/:id/like", async (req, res) => {
+  const eid = req.params.id;
+  const nedat = await updateEventAppend(eid, 'likes', req.session.user);
+
+  
+  if (!nedat) {
+    return res.status(500).json({ error: "Failed to update attendees" });
+  } else {
+    return res.status(200).render("events/eventDetails", { edata: nedat });  
+  }
 });
 
 router.get("/events/:id/comments", async (req, res) => {
@@ -140,41 +129,30 @@ router.get("/events/:id/reviews", async (req, res) => {
 });
 
 router.post("/events/:id/comments", async (req, res) => {
-  //TODO: router.post for events/:id/comments
-  //    This is called when trying to submit a comment
-  //    you can use this as starter code, or you can scrap it and start from fresh
   const eid = req.params.id;
-  const edat = await getEventById(eid);
-  if (!edat) {
-    return res.status(404).json({ error: "Event not found" });
-  }
+  const data = req.body
+  data.user = req.session.user;
+  const nedat = await updateEventAppend(eid, 'comments', data);
 
-  const eCol = await events();
-  const newComment = {
-    user: req.session.user,
-    text: req.body.text?.trim(),
-  };
-  const updatedComments = [...edat.comments, newComment];
-  const updateResult = await eCol.updateOne(
-    { _id: new ObjectId(eid) },
-    { $set: { comments: updatedComments } }
-  );
-  //todo: Check the res.status values and change the 200 and 500 if needed
-  if (updateResult.modifiedCount === 1) {
-    return res.status(200).json({ attendees: updatedAttendees });
-  } else {
+  if (!nedat) {
     return res.status(500).json({ error: "Failed to update attendees" });
+  } else {
+    return res.status(200).render("events/eventDetails", { edata: nedat });   
   }
 });
 router.post("/events/:id/reviews", async (req, res) => {
-  //TODO: router.post for events/:id/reviews
-  //    This is called when trying to submit a review
-  //    This should functionally be identical to comments except it just takes in an additional rating parameter
+  const eid = req.params.id;
   const newReview = {
     user: req.session.user,
     text: req.body.text?.trim(),
     rating: parseInt(req.body.rating, 10),
   };
+  const nedat = await updateEventAppend(eid, 'reviews', newReview);
+  if (!nedat) {
+    return res.status(500).json({ error: "Failed to update reviews" });
+  } else {
+    return res.status(200).render("events/eventDetails", { edata: nedat });   
+  }
 });
 //TODO: GET route for /events?search=
 // --- end changes ---

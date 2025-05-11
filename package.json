@@ -24,6 +24,7 @@
     "express": "^5.1.0",
     "express-handlebars": "^8.0.2",
     "express-session": "^1.18.1",
+    "lodash": "^4.17.21",
     "mongodb": "^6.16.0"
   }
 }
