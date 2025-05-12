@@ -1,46 +1,61 @@
-{{! Route would be /friends }}
-<section id="friend-feed-section">
 
-    <h2 id="friends-feed-title">Friends Feed</h2>
-    <a id="friends-list-link" href="/friends_list">View Friends List</a>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../public/css/main.css">
+    <title>{{title}}</title>
+</head>
+
+<body>
+    {{! Route would be /friends }}
+    <section id="friend-feed-section">
     
-    {{! Post Form }}
-    <form method="POST" id="post-form">
-        <textarea id="post-text" placeholder="What's on your mind?"></textarea>
-        <button type="submit" id="post-button">Post</button>
-    </form>
-
-    {{! Posts Feed }}
-    <div class="posts-feed">
-        {{#each posts}}
-        <div class="post-item" data-post-id="{{this._id}}">
-            <h4 class="friend-poster">{{this.name}} &emsp; {{this.postedDate}}</h4>
-            <p class="friend-post">{{this.body}}</p>
-
-            {{! Likes }}
-            <button class="like-button">Like</button>
-            <p class="post-likes">Current Likes: </p>
-
-            {{! Comments }}
-            <div class="post-comments">
-                {{#each this.comments}}
-                <div>
-                    <p class="comment-poster">{{this.name}} &emsp; {{this.postedDate}}</p>
-                    <p class="comment-body">{{this.comment}}</p>
+        <h2 id="friends-feed-title">Friends Feed</h2>
+        <a id="friends-list-link" href="/friends_list">View Friends List</a>
+    
+        {{! Post Form }}
+        <form method="POST" id="post-form">
+            <textarea id="post-text" placeholder="What's on your mind?"></textarea>
+            <button type="submit" id="post-button">Post</button>
+        </form>
+    
+        {{! Posts Feed }}
+        <div class="posts-feed">
+            {{#each posts}}
+            <div class="post-item" data-post-id="{{this._id}}">
+                <h4 class="friend-poster">{{this.name}} &emsp; {{this.postedDate}}</h4>
+                <p class="friend-post">{{this.body}}</p>
+    
+                {{! Likes }}
+                <button class="like-button">Like</button>
+                <p class="post-likes">Current Likes: </p>
+    
+                {{! Comments }}
+                <div class="post-comments">
+                    {{#each this.comments}}
+                    <div>
+                        <p class="comment-poster">{{this.name}} &emsp; {{this.postedDate}}</p>
+                        <p class="comment-body">{{this.comment}}</p>
+                    </div>
+                    {{/each}}
                 </div>
-                {{/each}}
+    
+                {{! Add Comment}}
+                <form method="POST" class="comment-form">
+                    <input type="text" class="comment-input" placeholder="Write a comment">
+                    <button type="submit" class="add-comment">Comment</button>
+                </form>
+    
             </div>
-
-            {{! Add Comment}}
-            <form method="POST" class="comment-form">
-                <input type="text" class="comment-input" placeholder="Write a comment">
-                <button type="submit" class="add-comment">Comment</button>
-            </form>
-
-        </div>
-        {{/each}}
-    </div>
-
+            {{/each}}
+        </div>    
+    </section>
     <script src="/public/js/friendsFeed.js"></script>
-
-</section>
+</body>
+    
+</html>
