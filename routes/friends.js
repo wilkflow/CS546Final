@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   createUser, checkUser, mkfriends, getUsrPosts,
-  getFFinfo, getUsrFeed, rmFriend, addPost
+  getFFinfo, getUsrFeed, rmFriend, addPost, getFFeed, likePost
 } from "../data/users.js";
 import { ObjectId } from "mongodb";
 const router = Router();
@@ -19,13 +19,7 @@ router.post("/friends/add", async (req, res) => {
         res.status(400)
     }
 });
-router.get("/friends/:id", async (req, res) => {
-    //console.log('fdghyj')
-    const uid = req.params.id;
-    const friendListDat = await getFFinfo(req.session.user, uid);
-    const friendPosts = await getUsrPosts(uid, false)
-    res.render('friends/friend', {posts : friendPosts, friend : friendListDat})
-});
+
 
 router.get("/friends_list", async (req, res) => {
     console.log('______________________TEGBLINJBHLGVF______________________-')
@@ -50,10 +44,34 @@ router.post("/friends/post", async (req, res) =>{
     res.status(200).json(nPost);
 });
 
-router.get("/friends_feed", async (req, res) =>{
-    //TODO implement
+router.get("/friends/feed", async (req, res) =>{
+    console.log('frind feed')
+    let uname = req.session.user;
+    const posts = await getFFeed(uname);
+    res.render('friends/friendsFeed', {posts:posts})
 });
 
+router.post("/friends/like", async (req, res) =>{
+    console.log('liekeedddd')
+    let data =  req.body
+    let uname = req.session.user;   
+    const npost = await likePost(data.postId, '--like', uname)
+    res.status(200).json(npost);
+});
+router.post("/friends/comment", async (req, res) =>{
+    console.log('liekeedddd')
+    let data =  req.body
+    let uname = req.session.user;   
+    const npost = await likePost(data.postId, data.comment, uname)
+    res.status(200).json(npost);
+});
 
+router.get("/friends/:id", async (req, res) => {
+    //console.log('fdghyj')
+    const uid = req.params.id;
+    const friendListDat = await getFFinfo(req.session.user, uid);
+    const friendPosts = await getUsrPosts(uid, false)
+    res.render('friends/friend', {posts : friendPosts, friend : friendListDat})
+});
 export default router;
 

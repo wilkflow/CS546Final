@@ -68,6 +68,7 @@ const getEventById = async (eventId) => {
   return cevent;
 };
 const updateEventAppend= async (eid, keystr, val) =>{
+  //keystr used to specify which part of doc u update
   //okay if this works this could be p fire
   const eCol = await events();
   const cevent = await getEventById(eid)

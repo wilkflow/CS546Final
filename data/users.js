@@ -138,7 +138,7 @@ const addPost = async (uname, body) => {
     const cusr = await uCol.findOne({username : uname.toLowerCase()})
     let cd = new Date();
     let cdt = cd.getDate() + "/" + (cd.getMonth() + 1) + "/" + cd.getFullYear();
-    let ndoc = {_id : new ObjectId(), body : body, comments : [], likes : 0, name: cusr.firstName + ' ' + cusr.lastName, postedDate: cdt};
+    let ndoc = {_id : new ObjectId(), body : body, comments : [], likes : 0, name: cusr.firstName + ' ' + cusr.lastName, postedDate: cdt, likedPost : [], posterID : cusr._id};
     let nusr = await uCol.findOneAndUpdate(
         { username: uname.toLowerCase() },
         { $push: { userPosts:  ndoc} },
@@ -151,6 +151,71 @@ const addPost = async (uname, body) => {
     }
 }
 
+const getFFeed = async (uname) =>{
+    const uCol = await users();
+    const cusr = await uCol.findOne({username : uname.toLowerCase()});
+    const flist = cusr.friendsList;
+    let rarr = cusr.userPosts;
+    for (const fr of flist){
+        let fusr = await uCol.findOne({_id: fr._id});
+        rarr = rarr.concat(fusr.userPosts);
+    };
+    return rarr;
+}
+
+const likePost = async (pid, comment = '--like', uid) =>{
+    const uCol = await users();
+    //const cusr = await uCol.findOne({username: uid.toLowerCase()});
+    const posts = await getFFeed(uid);
+    let lpost = ld.find(posts, {_id : new ObjectId(pid)})
+    let frnd = await uCol.findOne({_id : lpost.posterID})
+    console.log(frnd)
+    if(comment == '--like'){
+        
+        console.log('___')
+        //console.log(lpost)
+        if(lpost.likedPost.includes(uid)){
+            console.log('INCLUDES')
+            lpost.likedPost = lpost.likedPost.filter(item => item !== uid);
+            lpost.likes = lpost.likes -1
+        }else{
+            console.log('NOT--------------INCLUDES')
+            lpost.likedPost.push(uid)
+            
+            lpost.likes = lpost.likes + 1;
+        }
+        //console.log(lpost);
+        
+        //console.log(frnd);
+        console.log(pid)
+        let allp = frnd.userPosts.filter(d => d._id.toString() !== pid);
+        console.log(allp);
+        allp.push(lpost);
+        const npost = await uCol.findOneAndUpdate(
+            { _id: lpost.posterID},
+            { $set: { "userPosts" :  allp} },
+            { returnDocument: "after" }
+        )
+        return ld.find(npost.userPosts, {_id: new ObjectId(pid)})
+    }else{
+        let cd = new Date();
+        let cdt = cd.getDate() + "/" + (cd.getMonth() + 1) + "/" + cd.getFullYear();
+        const ncom = {name : frnd.firstName + ' ' + frnd.lastName, postedDate : cdt, comment: comment}
+        lpost.comments.push(ncom);
+        console.log('___')
+        let allp = frnd.userPosts.filter(d => d._id.toString() !== pid);
+        //console.log(allp);
+        allp.push(lpost);
+        const npost = await uCol.findOneAndUpdate(
+            { _id: lpost.posterID},
+            { $set: { "userPosts" :  allp} },
+            { returnDocument: "after" }
+        )
+        let nnpost = ld.find(npost.userPosts, {_id: new ObjectId(pid)})
+        console.log(nnpost)
+        return ld.find(nnpost.comments, ncom)
+    }
+}
 
 
-export {createUser, checkUser, mkfriends, getUsrPosts, getFFinfo, getUsrFeed, rmFriend, addPost};
+export {createUser, checkUser, mkfriends, getUsrPosts, getFFinfo, getUsrFeed, rmFriend, addPost, getFFeed, likePost};
