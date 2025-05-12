@@ -1,27 +1,38 @@
-<h1>All Events</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-<div id="search-container">
-  <input
-    type="text"
-    id="search-input"
-    placeholder="Search by keyword or category"
-  />
-  <button id="search-btn">Search</button>
-</div>
-<a href="/events/addevent">Add new Event</a>
-<table id="events-table">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Date</th>
-      <th>Category</th>
-      <th>Capacity</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody id="events-table-body">
-    {{! Rows will be rendered by client-side JS }}
-  </tbody>
-</table>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/public/css/eventPage.css">
+  <title>{{title}}</title>
+</head>
 
-<script src="/public/js/eventsPage.js"></script>
+<body>
+  <h1>All Events</h1>
+  
+  <div id="search-container">
+    <input type="text" id="search-input" placeholder="Search by keyword or category" />
+    <button id="search-btn">Search</button>
+  </div>
+  <a href="/events/addevent">Add new Event</a>
+  <table id="events-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Capacity</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="events-table-body">
+      {{! Rows will be rendered by client-side JS }}
+    </tbody>
+  </table>
+  
+  <script src="/public/js/eventsPage.js"></script>
+</body>
+
+</html>

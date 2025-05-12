@@ -1,16 +1,33 @@
-<h1>Log In</h1>
-<form method="POST" action="/login" id="login-form">
-    <div class="div-padding">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" placeholder="Username" value="{{username}}">
-    </div>
-    <div class="div-padding">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Password" value="{{password}}">
-    </div>
-    <button class="buttonLogin" type="submit" name="submitBtn" id="submitBtn">Log In</button>
-    <div class="error">
-        {{error}}
-    </div>
-</form>
-<a href="/signup">Create an account here</a>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/loginPage.css">
+    <title>{{title}}</title>
+</head>
+
+<body>
+    <h1>Log In</h1>
+    <form method="POST" action="/login" id="login-form">
+        <div class="div-padding">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Username" value="{{username}}">
+        </div>
+        <div class="div-padding">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Password" value="{{password}}">
+        </div>
+        <button class="buttonLogin" type="submit" name="submitBtn" id="submitBtn">Log In</button>
+        <div class="error">
+            {{error}}
+        </div>
+    </form>
+    <a href="/signup">Create an account here</a>
+</body>
+
+</html>

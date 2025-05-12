@@ -1,19 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../public/css/main.css">
+  <title>{{title}}</title>
+</head>
+
+<body>
+
 <h1 id="event-title">{{edata.title}}</h1>
 
 <div id="event-info">
   <p><strong>Description:</strong>
-    <span id="event-description">{{edata.body}}</span></p>
+    <span id="event-description">{{edata.body}}</span>
+  </p>
   <p><strong>Date:</strong> <span id="event-date">{{edata.date}}</span></p>
   <p><strong>Category:</strong>
-    <span id="event-category">{{edata.category}}</span></p>
+    <span id="event-category">{{edata.category}}</span>
+  </p>
   <p><strong>Capacity:</strong>
     <span id="event-capacity">{{edata.attendees.length}}
       /
-      {{edata.maxCapacity}}</span></p>
+      {{edata.maxCapacity}}</span>
+  </p>
   <p><strong>Likes:</strong>
-    <span id="like-count">{{edata.likes.length}}</span></p>
+    <span id="like-count">{{edata.likes.length}}</span>
+  </p>
   <p><strong>Visibility:</strong>
-    <span id="visibility">{{#if edata.friendsOnly}}Friends Only{{else}}Public{{/if}}</span></p>
+    <span id="visibility">{{#if edata.friendsOnly}}Friends Only{{else}}Public{{/if}}</span>
+  </p>
 
 </div>
 
@@ -24,15 +42,12 @@
 
 <h2>Comments</h2>
 <div id="comments-container">
-  {{! Comments will be loaded here. We use fetch for this one to make newly posted comments load in dynamically so the user doesn't have to refresh to see their own comment }}
+  {{! Comments will be loaded here. We use fetch for this one to make newly posted comments load in dynamically so the
+  user doesn't have to refresh to see their own comment }}
 </div>
 
 <form id="comment-form">
-  <textarea
-    id="comment-text"
-    placeholder="Write a comment..."
-    required
-  ></textarea>
+  <textarea id="comment-text" placeholder="Write a comment..." required></textarea>
   <button type="submit">Post Comment</button>
 </form>
 
@@ -52,3 +67,7 @@
 </form>
 
 <script src="/public/js/eventDetails.js"></script>
+
+</body>
+
+</html>

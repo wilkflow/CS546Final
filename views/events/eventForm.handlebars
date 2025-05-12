@@ -1,31 +1,48 @@
-<h1>{{#if eventId}}Edit Event{{else}}Create Event{{/if}}</h1>
 
-<p id="error-message" style="color:red;"></p>
 
-<form id="event-form">
-  {{#if eventId}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/public/css/eventForm.css">
+  <title>{{title}}</title>
+</head>
+
+<body>
+  <h1>{{#if eventId}}Edit Event{{else}}Create Event{{/if}}</h1>
+  
+  <p id="error-message" style="color:red;"></p>
+  
+  <form id="event-form">
+    {{#if eventId}}
     <input type="hidden" id="event-id" value="{{eventId}}" />
-  {{/if}}
+    {{/if}}
+  
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required />
+  
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+  
+    <label for="category">Category:</label>
+    <input type="text" id="category" name="category" required />
+  
+    <label for="date">Date and Time:</label>
+    <input type="datetime-local" id="date" name="date" required />
+  
+    <label for="max-capacity">Max Capacity:</label>
+    <input type="number" id="max-capacity" name="maxCapacity" min="1" required />
+  
+    <label for="friends-only">Friends Only:</label>
+    <input type="checkbox" id="friends-only" name="friendsOnly" />
+  
+    <button type="submit">{{#if eventId}}Update Event{{else}}Create Event{{/if}}</button>
+  </form>
+  
+  <script src="/public/js/eventForm.js"></script>
+</body>
 
-  <label for="title">Title:</label>
-  <input type="text" id="title" name="title" required />
-
-  <label for="description">Description:</label>
-  <textarea id="description" name="description" required></textarea>
-
-  <label for="category">Category:</label>
-  <input type="text" id="category" name="category" required />
-
-  <label for="date">Date and Time:</label>
-  <input type="datetime-local" id="date" name="date" required />
-
-  <label for="max-capacity">Max Capacity:</label>
-  <input type="number" id="max-capacity" name="maxCapacity" min="1" required />
-
-  <label for="friends-only">Friends Only:</label>
-  <input type="checkbox" id="friends-only" name="friendsOnly" />
-
-  <button type="submit">{{#if eventId}}Update Event{{else}}Create Event{{/if}}</button>
-</form>
-
-<script src="/public/js/eventForm.js"></script>
+</html>

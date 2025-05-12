@@ -1,29 +1,44 @@
 {{! Route would be /friends/list }}
-<section id="friends-list-section">
 
-    <h2 id="friends-list-title">Friends List</h2>
-    <a id="friends-feed-link" href="/friends_feed">To Friend's Feed</a>
+<!DOCTYPE html>
+<html lang="en">
 
-    {{! Form for adding friends }}
-    <form method="POST" id="add-friend">
-        <label for="friend-input">Add Friend</label>
-        <input type="text" id="friend-input" placeholder="Enter Username">
-        <button id="add-friend-button">Add</button>
-    </form>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../public/css/main.css">
+    <title>{{title}}</title>
+</head>
 
-    {{! Friends List: Each item is a link to that friend's friend page and has a button to remove that friend }}
-    <ul id="friends-list">
-        {{#each friends}}
-        <li class="friend-item" data-friend-id="{{this._id}}">
-            <a href="/friends/{{this._id}}">{{this.name}}</a>
-            <form class="remove-friend">
-                <input type="hidden" class="friendId-input" value="{{this._id}}">
-                <button class="remove-friend-button">Remove</button>
-            </form>
-        </li>
-        {{/each}}
-    </ul>
-
+<body>
+    <section id="friends-list-section">
+    
+        <h2 id="friends-list-title">Friends List</h2>
+        <a id="friends-feed-link" href="/friends_feed">To Friend's Feed</a>
+    
+        {{! Form for adding friends }}
+        <form method="POST" id="add-friend">
+            <label for="friend-input">Add Friend</label>
+            <input type="text" id="friend-input" placeholder="Enter Username">
+            <button id="add-friend-button">Add</button>
+        </form>
+    
+        {{! Friends List: Each item is a link to that friend's friend page and has a button to remove that friend }}
+        <ul id="friends-list">
+            {{#each friends}}
+            <li class="friend-item" data-friend-id="{{this._id}}">
+                <a href="/friends/{{this._id}}">{{this.name}}</a>
+                <form class="remove-friend">
+                    <input type="hidden" class="friendId-input" value="{{this._id}}">
+                    <button class="remove-friend-button">Remove</button>
+                </form>
+            </li>
+            {{/each}}
+        </ul>
+    
+    </section>
     <script src="/public/js/friendsList.js"></script>
+</body>
 
-</section>
+</html>
