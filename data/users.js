@@ -122,6 +122,17 @@ const getUsrFeed = async (username) =>{
     console.log(cusr)
     return cusr.friendsList;
 }
+const rmFriend = async (fid, uname) => {
+    console.log(fid)
+    const uCol = await users();
+    let cuser = await uCol.findOne({username: uname.toLowerCase()})
+    let nusr = await uCol.findOneAndUpdate(
+        { _id: cuser._id },
+        { $pull: { friendsList: {_id : new ObjectId(fid)} } },
+        { returnDocument: "after" }
+    );
+    return nusr.friendsList;
+}
 
 
-export {createUser, checkUser, mkfriends, getUsrPosts, getFFinfo, getUsrFeed};
+export {createUser, checkUser, mkfriends, getUsrPosts, getFFinfo, getUsrFeed, rmFriend  };
