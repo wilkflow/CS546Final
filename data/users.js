@@ -24,6 +24,7 @@ const createUser = async (username, password) => {
         userPosts: [],
         userLikes: [],
         userComments: [],
+        friendsList: [],
         gender: '',
         firstName: 'John',
         lastName: 'Doe',
@@ -83,19 +84,12 @@ const mkfriends = async (username, fusrname) =>{
     const uid = user._id;
     
     if(ld.find(user.friendsList, {_id : fusr._id})){
+        return user.friendsList;
+    }else{
         let upduser = await uCol.findOneAndUpdate(
                 { _id: user._id },
                 { $push: { friendsList: nlistF } },
                 { returnDocument: "after" }
-        );
-        if(upduser){
-            return upduser.friendsList;
-        }else{throw new Error('Unable to add friend');}
-    }else{
-        let upduser = await uCol.findOneAndUpdate(
-            { _id: user._id },
-            { $set: { friendsList: [nlistF] } },
-            { returnDocument: "after" }
         );
         if(upduser){
             return upduser.friendsList;

@@ -19,23 +19,27 @@ addForm.addEventListener('submit', (event) => {
     fetch('/friends/add', requestConfig).then(async (response) => {
         if(!response.ok) return alert("Failed to Add Friend");
 
-        const newFriend = await response.json();
-        friendInput.value = '';
+        const newFriends = await response.json();
+        friendsList.innerHTML = ``;
+        newFriends.forEach(newFriend => {
+            friendInput.value = '';
 
-        const li = document.createElement('li');
-        li.className = 'friend-item';
-        li.dataset.friendId = newFriend._id;
-        li.innerHTML = 
-        `<a href="/friends/${newFriend._id}">${newFriend.name}</a>
-        <form class="remove-friend">
-            <input type="hidden" class="friendId-input" value="${newFriend._id}">
-            <button class="remove-friend-button">Remove</button>
-        </form>`;
+            const li = document.createElement('li');
+            li.className = 'friend-item';
+            li.dataset.friendId = newFriend._id;
+            li.innerHTML = 
+            `<a href="/friends/${newFriend._id}">${newFriend.name}</a>
+            <form class="remove-friend">
+                <input type="hidden" class="friendId-input" value="${newFriend._id}">
+                <button class="remove-friend-button">Remove</button>
+            </form>`;
 
-        friendsList.append(li);
+            friendsList.append(li);
 
-        const removeForm = li.querySelector('.remove-friend');
-        removeForm.addEventListener('submit', removeFriend);
+            const removeForm = li.querySelector('.remove-friend');
+            removeForm.addEventListener('submit', removeFriend);
+        })
+        
 
     }).catch(() => alert("Network error while adding friend."));
 });
