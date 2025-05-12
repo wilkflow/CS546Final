@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   createUser, checkUser, mkfriends, getUsrPosts,
-  getFFinfo, getUsrFeed, rmFriend
+  getFFinfo, getUsrFeed, rmFriend, addPost
 } from "../data/users.js";
 import { ObjectId } from "mongodb";
 const router = Router();
@@ -42,6 +42,18 @@ router.post("/friends/remove", async (req, res) => {
     console.log(flist)
     res.status(200).render('friends/friendsList', {friends : flist});
 });
+
+router.post("/friends/post", async (req, res) =>{
+    let uname = req.session.user;
+    let data =  req.body.body;
+    const nPost = await addPost(uname, data);
+    res.status(200).json(nPost);
+});
+
+router.get("/friends_feed", async (req, res) =>{
+    //TODO implement
+});
+
 
 export default router;
 

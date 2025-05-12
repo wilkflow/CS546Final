@@ -133,6 +133,24 @@ const rmFriend = async (fid, uname) => {
     );
     return nusr.friendsList;
 }
+const addPost = async (uname, body) => {
+    const uCol = await users();
+    const cusr = await uCol.findOne({username : uname.toLowerCase()})
+    let cd = new Date();
+    let cdt = cd.getDate() + "/" + (cd.getMonth() + 1) + "/" + cd.getFullYear();
+    let ndoc = {_id : new ObjectId(), body : body, comments : [], likes : 0, name: cusr.firstName + ' ' + cusr.lastName, postedDate: cdt};
+    let nusr = await uCol.findOneAndUpdate(
+        { username: uname.toLowerCase() },
+        { $push: { userPosts:  ndoc} },
+        { returnDocument: "after" }
+    )
+    if(ld.find(nusr.userPosts, ndoc)){
+        return ndoc;
+    }else{
+        throw new Error('unable to push to posts');
+    }
+}
 
 
-export {createUser, checkUser, mkfriends, getUsrPosts, getFFinfo, getUsrFeed, rmFriend  };
+
+export {createUser, checkUser, mkfriends, getUsrPosts, getFFinfo, getUsrFeed, rmFriend, addPost};
