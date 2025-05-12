@@ -17,13 +17,7 @@ const createEvent = async (
     const eCol = await events();
     const uCol = await users();
     let cd = new Date();
-    let cdt =
-      "Last Sync: " +
-      cd.getDate() +
-      "/" +
-      (cd.getMonth() + 1) +
-      "/" +
-      cd.getFullYear();
+    let cdt = cd.getDate() + "/" + (cd.getMonth() + 1) + "/" + cd.getFullYear();
     let nevent = {
       category: category,
       title: title,

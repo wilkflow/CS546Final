@@ -1,5 +1,6 @@
 import {users} from '../config/mongoCollections.js';
 import bcrypt from 'bcrypt';
+import ld from 'lodash';
 const saltRounds = 16;
 import { usernameValidation, passwordValidation } from '../public/js/validation.js';
 
@@ -69,5 +70,37 @@ const checkUser = async (username, password) => {
         }
     }
 };
-
-export {createUser, checkUser};
+const mkfriends = async (username, fusrname) =>{
+    const uCol = await users();
+    const user = await uCol.findOne({ username: username.toLowerCase() });
+    const fusr = await uCol.findOne({ username: fusrname.toLowerCase() });
+    if(!user || !fusr){
+        throw new Error('friend does not exist')
+    }
+    let cd = new Date();
+    let cdt = cd.getDate() + "/" + (cd.getMonth() + 1) + "/" + cd.getFullYear();
+    const nlistF = {_id : fusr._id, name : fusr.firstName + ' ' + fusr.lastName, addedDate : cdt, status : 'inactive', friendFeed: 'True'};
+    const uid = user._id;
+    
+    if(ld.find(user.friendsList, {_id : fusr._id})){
+        let upduser = await uCol.findOneAndUpdate(
+                { _id: user._id },
+                { $push: { friendsList: nlistF } },
+                { returnDocument: "after" }
+        );
+        if(upduser){
+            return upduser.friendsList;
+        }else{throw new Error('Unable to add friend');}
+    }else{
+        let upduser = await uCol.findOneAndUpdate(
+            { _id: user._id },
+            { $set: { friendsList: [nlistF] } },
+            { returnDocument: "after" }
+        );
+        if(upduser){
+            return upduser.friendsList;
+        }else{throw new Error('Unable to add friend');}
+        
+    }
+}
+export {createUser, checkUser, mkfriends};
