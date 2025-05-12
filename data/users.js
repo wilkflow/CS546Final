@@ -1,5 +1,6 @@
 import {users} from '../config/mongoCollections.js';
 import bcrypt from 'bcrypt';
+import { ObjectId } from 'mongodb';
 import ld from 'lodash';
 const saltRounds = 16;
 import { usernameValidation, passwordValidation } from '../public/js/validation.js';
@@ -22,6 +23,7 @@ const createUser = async (username, password) => {
     password = await bcrypt.hash(password, saltRounds);
     let newUser = {
         userPosts: [],
+        userEvents: [],
         userLikes: [],
         userComments: [],
         friendsList: [],
@@ -96,5 +98,30 @@ const mkfriends = async (username, fusrname) =>{
         }else{throw new Error('Unable to add friend');}
         
     }
+};
+const getUsrPosts = async (uid, isUsername) => {
+    let uCol = await users();
+    
+    if(!isUsername){
+        let user = await uCol.findOne({_id : new ObjectId(uid)});
+        return user.userPosts;
+    }else{
+        let user = await uCol.findOne({username : uid.toLowerCase()});
+        return user.userPosts;
+    }
+    
+};
+const getFFinfo = async (username, friendId) =>{
+    const uCol = await users();
+    let cusr = await uCol.findOne({username: username.toLowerCase()});
+    return ld.find(cusr.friendsList, {_id : new ObjectId(friendId)})
 }
-export {createUser, checkUser, mkfriends};
+const getUsrFeed = async (username) =>{
+    const uCol = await users();
+    let cusr = await uCol.findOne({username : username.toLowerCase()});
+    console.log(cusr)
+    return cusr.friendsList;
+}
+
+
+export {createUser, checkUser, mkfriends, getUsrPosts, getFFinfo, getUsrFeed};

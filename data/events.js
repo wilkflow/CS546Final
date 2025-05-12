@@ -35,15 +35,15 @@ const createEvent = async (
     let pid = eins.insertedId.toString();
     console.log(pid);
     const user = await uCol.findOne({ username: userName.toLowerCase() });
-    let uposts = user.userPosts;
+    let uposts = user.userEvents;
     uposts.push(pid);
     let upduser = await uCol.findOneAndUpdate(
       { _id: user._id },
-      { $set: { userPosts: uposts } },
+      { $set: { userEvents: uposts } },
       { returnDocument: "after" }
     );
     console.log(upduser);
-    if (upduser.userPosts.includes(pid)) {
+    if (upduser.userEvents.includes(pid)) {
       console.log("event added successfuly");
       return true;
     } else {
