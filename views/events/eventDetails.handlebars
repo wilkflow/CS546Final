@@ -1,73 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../../public/css/main.css">
+  <link rel="stylesheet" href="/public/css/eventDetails.css">
   <title>{{title}}</title>
 </head>
 
 <body>
 
-<h1 id="event-title">{{edata.title}}</h1>
+  <h1 id="event-title">{{edata.title}}</h1>
 
-<div id="event-info">
-  <p><strong>Description:</strong>
-    <span id="event-description">{{edata.body}}</span>
-  </p>
-  <p><strong>Date:</strong> <span id="event-date">{{edata.date}}</span></p>
-  <p><strong>Category:</strong>
-    <span id="event-category">{{edata.category}}</span>
-  </p>
-  <p><strong>Capacity:</strong>
-    <span id="event-capacity">{{edata.attendees.length}}
-      /
-      {{edata.maxCapacity}}</span>
-  </p>
-  <p><strong>Likes:</strong>
-    <span id="like-count">{{edata.likes.length}}</span>
-  </p>
-  <p><strong>Visibility:</strong>
-    <span id="visibility">{{#if edata.friendsOnly}}Friends Only{{else}}Public{{/if}}</span>
-  </p>
+  <div id="event-info">
+    <p><strong>Description:</strong>
+      <span id="event-description">{{edata.body}}</span>
+    </p>
+    <p><strong>Date:</strong> <span id="event-date">{{edata.date}}</span></p>
+    <p><strong>Category:</strong>
+      <span id="event-category">{{edata.category}}</span>
+    </p>
+    <p><strong>Capacity:</strong>
+      <span id="event-capacity">{{edata.attendees.length}}
+        /
+        {{edata.maxCapacity}}</span>
+    </p>
+    <p><strong>Likes:</strong>
+      <span id="like-count">{{edata.likes.length}}</span>
+    </p>
+    <p><strong>Visibility:</strong>
+      <span id="visibility">{{#if edata.friendsOnly}}Friends Only{{else}}Public{{/if}}</span>
+    </p>
 
-</div>
+  </div>
 
-<div id="event-buttons">
-  <button id="rsvp-btn">RSVP / Cancel</button>
-  <button id="like-btn">Like</button>
-</div>
+  <div id="event-buttons">
+    <button id="rsvp-btn">RSVP / Cancel</button>
+    <button id="like-btn">Like</button>
+  </div>
 
-<h2>Comments</h2>
-<div id="comments-container">
-  {{! Comments will be loaded here. We use fetch for this one to make newly posted comments load in dynamically so the
-  user doesn't have to refresh to see their own comment }}
-</div>
+  <h2>Comments</h2>
+  <div id="comments-container">
+    {{! Comments will be loaded here. We use fetch for this one to make newly posted comments load in dynamically so the
+    user doesn't have to refresh to see their own comment }}
+  </div>
 
-<form id="comment-form">
-  <textarea id="comment-text" placeholder="Write a comment..." required></textarea>
-  <button type="submit">Post Comment</button>
-</form>
+  <form id="comment-form">
+    <textarea id="comment-text" placeholder="Write a comment..." required></textarea>
+    <button type="submit">Post Comment</button>
+  </form>
 
-<h2>Reviews</h2>
-<div id="reviews-container">
-  {{! Reviews will be loaded here. We use fetch for this one to make newly posted reviews load in dynamically }}
-</div>
+  <h2>Reviews</h2>
+  <div id="reviews-container">
+    {{! Reviews will be loaded here. We use fetch for this one to make newly posted reviews load in dynamically }}
+  </div>
 
-<form id="review-form">
-  <label for="rating">Rating (1-5):</label>
-  <input type="number" id="rating" min="1" max="5" required />
+  <form id="review-form">
+    <label for="rating">Rating (1-5):</label>
+    <input type="number" id="rating" min="1" max="5" required />
 
-  <label for="review-text">Review:</label>
-  <textarea id="review-text" required></textarea>
+    <label for="review-text">Review:</label>
+    <textarea id="review-text" required></textarea>
 
-  <button type="submit">Submit Review</button>
-</form>
+    <button type="submit">Submit Review</button>
+  </form>
 
-<script src="/public/js/eventDetails.js"></script>
+  <script src="/public/js/eventDetails.js"></script>
 
 </body>
-
-</html>
