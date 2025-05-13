@@ -1,0 +1,120 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f6fd;
+    margin: 0;
+    padding: 2rem;
+    color: #333;
+    max-width: 800px;
+    margin-inline: auto;
+}
+
+h1#event-title {
+    font-size: 2.5rem;
+    color: #4a148c;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+#event-info {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    margin-bottom: 2rem;
+}
+
+#event-info p {
+    margin: 0.5rem 0;
+    font-size: 1.05rem;
+}
+
+#event-info strong {
+    color: #6a1b9a;
+}
+
+/* Buttons Section */
+#event-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+}
+
+#event-buttons button {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #6a1b9a;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#event-buttons button:hover {
+    background-color: #4a148c;
+}
+
+/* Comment Section */
+h2 {
+    color: #4a148c;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+#comments-container,
+#reviews-container {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    min-height: 60px;
+}
+
+/* Comment Form */
+#comment-form,
+#review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+textarea,
+input[type="number"] {
+    padding: 0.6rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    resize: vertical;
+}
+
+#comment-text,
+#review-text {
+    min-height: 80px;
+}
+
+button[type="submit"] {
+    background-color: #6a1b9a;
+    color: white;
+    border: none;
+    padding: 0.6rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button[type="submit"]:hover {
+    background-color: #4a148c;
+}
+
+label[for="rating"],
+label[for="review-text"] {
+    font-weight: 600;
+    color: #555;
+}
