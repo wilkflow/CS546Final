@@ -24,4 +24,20 @@ function passwordValidation(password) {
     }
 }
 
-export {usernameValidation, passwordValidation};
+function ageCheck(date) {
+    const dob = new Date(date);
+    const now = new Date();
+    var age = now.getFullYear() - dob.getFullYear();
+    var m = now.getMonth() - dob.getMonth();
+    if (m < 0 || (m == 0 && now.getDate() < dob.getDate())) {
+        age--;
+    }
+
+    if (age < 13) {
+        throw 'Cannot sign up as you are too young (younger than 13).'
+    }
+
+    return age;
+}
+
+export {usernameValidation, passwordValidation, ageCheck};

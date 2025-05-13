@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../public/css/main.css">
+    <title>{{title}}</title>
+</head>
+
+<body>
+    <h1>Update Profile</h1>
+    <a id="profile-link" href="/profile">Return to profile</a><br>
+    <form method="POST" action="/profile/settings" id="update-form">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" value="{{firstName}}"><br>
+
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastName" value="{{lastName}}"><br>
+        <button class="buttonUpdate" type="submit" name="submitBtn" id="submitBtn">Update</button>
+        <div class="error">
+            {{error}}
+        </div>
+    </form>
+</body>
+
+</html>

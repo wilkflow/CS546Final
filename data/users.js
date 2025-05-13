@@ -3,9 +3,9 @@ import bcrypt from 'bcrypt';
 import { ObjectId } from 'mongodb';
 import ld from 'lodash';
 const saltRounds = 16;
-import { usernameValidation, passwordValidation } from '../public/js/validation.js';
+import { usernameValidation, passwordValidation, ageCheck } from '../public/js/validation.js';
 
-const createUser = async (username, password) => {
+const createUser = async (username, password, date) => {
     if (!username) {
         throw 'Please provide username';
     }
@@ -14,6 +14,7 @@ const createUser = async (username, password) => {
     }
     usernameValidation(username);
     passwordValidation(password);
+    var age = ageCheck(date);
     let usernameLowerCase = username.toLowerCase();
     const userCollection = await users();
     const user = await userCollection.findOne({username: usernameLowerCase});
@@ -32,7 +33,7 @@ const createUser = async (username, password) => {
         lastName: 'Doe',
         city: '',
         state: '',
-        age: '',
+        age,
         username: usernameLowerCase,
         password
     };
@@ -73,6 +74,17 @@ const checkUser = async (username, password) => {
         }
     }
 };
+
+const updateUser = async (username, newFirstName, newLastName) => {
+    const usersCollection = await users();
+    const currUser = await usersCollection.findOneAndUpdate(
+        {username: username.toLowerCase()},
+        { $set: {firstName: newFirstName, lastName: newLastName}},
+    );
+
+    return {infoUpdated: true};
+}
+
 const mkfriends = async (username, fusrname) =>{
     const uCol = await users();
     const user = await uCol.findOne({ username: username.toLowerCase() });
@@ -218,4 +230,4 @@ const likePost = async (pid, comment = '--like', uid) =>{
 }
 
 
-export {createUser, checkUser, mkfriends, getUsrPosts, getFFinfo, getUsrFeed, rmFriend, addPost, getFFeed, likePost};
+export {createUser, checkUser, updateUser, mkfriends, getUsrPosts, getFFinfo, getUsrFeed, rmFriend, addPost, getFFeed, likePost};

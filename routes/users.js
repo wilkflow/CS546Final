@@ -1,7 +1,7 @@
 import {Router} from 'express';
 const router = Router();
-import {createUser, checkUser} from '../data/users.js';
-import { usernameValidation, passwordValidation } from '../public/js/validation.js';
+import {createUser, checkUser, updateUser} from '../data/users.js';
+import { usernameValidation, passwordValidation, ageCheck } from '../public/js/validation.js';
 
 router.get("/", async (req, res) => {
     if (req.session.user) {
@@ -67,10 +67,11 @@ router.post("/signup", async (req, res) => {
         usernameValidation(data.username);
         if (!data || data.password == "") throw 'Please provide password';
         passwordValidation(data.password);
-        const {username, password} = data;
+        ageCheck(data.dob);
+        const {username, password, dob} = data;
 
         try {
-            let users = await createUser(username, password);
+            let users = await createUser(username, password, dob);
             if (users.userInserted == true) {
                 res.redirect("/login");
             } else {
@@ -105,6 +106,54 @@ router.get("/profile", async (req, res) => {
     } catch (e) {
         res.status(400).render("landing/error", {
             error: e,
+        });
+    }
+});
+
+router.get("/profile/settings", async (req, res) => {
+    try {
+        if (req.session.user) {
+            res.render("landing/settings", {
+                username: req.session.user,
+                title: "Settings"
+            });
+        }
+    } catch (e) {
+        res.status(400).render("landing/error", {
+            error: e,
+        });
+    }
+});
+
+router.post("/profile/settings", async (req, res) => {
+    try {
+        let data = req.body;
+        let username = req.session.user;
+        let {firstName, lastName} = data;
+
+        try {
+            let users = await updateUser(username, firstName, lastName);
+            if (users.infoUpdated == true) {
+                res.redirect("/profile");
+            } else {
+                res.status(400).render("landing/settings", {
+                    error: e,
+                    username: username,
+                    firstName: firstName,
+                    lastName: lastName,
+                    title: "Settings"
+                });
+            }
+        } catch(e) {
+            res.status(400).render("landing/settings", {
+                error: e,
+                title: "Settings"
+            });
+        }
+    } catch(e) {
+        res.status(400).render("landing/settings", {
+            error: e,
+            title: "Settings"
         });
     }
 });
