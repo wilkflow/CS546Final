@@ -1,0 +1,117 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f6fd;
+    margin: 0;
+    padding: 2rem;
+    color: #333;
+    max-width: 800px;
+    margin-inline: auto;
+}
+
+/* Section Title */
+#friends-list-title {
+    font-size: 2rem;
+    color: #4a148c;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Link to Friend's Feed */
+#friends-feed-link {
+    display: block;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #6a1b9a;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+#friends-feed-link:hover {
+    text-decoration: underline;
+}
+
+/* Add Friend Form */
+#add-friend {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+#add-friend label {
+    font-weight: 600;
+    color: #555;
+}
+
+#friend-input {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    flex: 1 1 200px;
+}
+
+#add-friend-button {
+    background-color: #6a1b9a;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#add-friend-button:hover {
+    background-color: #4a148c;
+}
+
+/* Friends List */
+#friends-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.friend-item {
+    background-color: #ffffff;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.friend-item a {
+    font-weight: 600;
+    color: #6a1b9a;
+    text-decoration: none;
+}
+
+.friend-item a:hover {
+    text-decoration: underline;
+}
+
+.remove-friend {
+    margin: 0;
+}
+
+.remove-friend-button {
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.remove-friend-button:hover {
+    background-color: #b71c1c;
+}
