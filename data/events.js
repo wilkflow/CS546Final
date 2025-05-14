@@ -113,4 +113,15 @@ const updateEventAppend= async (eid, keystr, val) =>{
   
   
 }
-export {createEvent, getAllEvents, getEventById, updateEventAppend};
+
+const searchEvents = async (sq) =>{
+  const allev = await getAllEvents();
+  let revs = new Array();
+  allev.forEach(e => {
+    if(e.category.includes(sq)){
+      revs.push(e)
+    }
+  })
+  return revs;
+}
+export {createEvent, getAllEvents, getEventById, updateEventAppend, searchEvents};

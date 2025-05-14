@@ -49,7 +49,7 @@ const renderEvent = (event) => {
 
 const handleSearch = async () => {
   const keyword = document.getElementById("search-input").value.trim();
-  const res = await fetch(`/events?search=${encodeURIComponent(keyword)}`);
+  const res = await fetch(`/events/search/:${encodeURIComponent(keyword)}`);
   const events = await res.json();
 
   const table_body = document.getElementById("events-table-body");

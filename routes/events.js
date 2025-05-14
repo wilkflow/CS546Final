@@ -3,6 +3,7 @@ import {
   createEvent,
   getAllEvents,
   getEventById,
+  searchEvents,
   updateEventAppend
 } from "../data/events.js";
 import { ObjectId } from "mongodb";
@@ -156,5 +157,10 @@ router.post("/events/:id/reviews", async (req, res) => {
 });
 //TODO: GET route for /events?search=
 // --- end changes ---
-
+router.get("/events/search/:sq", async (req, res) => {
+  console.log(req.params.sq)
+  const sq = decodeURIComponent(req.params.sq.slice(1))
+  const nedat = await searchEvents(sq)
+  res.json(nedat);
+});
 export default router;
