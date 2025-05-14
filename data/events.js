@@ -92,6 +92,7 @@ const updateEventAppend= async (eid, keystr, val) =>{
     }
 
   }
+  if((keystr == 'attendees' && cevent.attendees.length < cevent.maxCapacity) || keystr != 'attendees'){
       const ncevent = await eCol.findOneAndUpdate(
         { _id: new ObjectId(eid) },
         { $push: { [keystr]: val } },
@@ -108,7 +109,7 @@ const updateEventAppend= async (eid, keystr, val) =>{
         }else{throw new Error('Failed to update event')}
       }
         
-  
+    }
   
   
 }
