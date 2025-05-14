@@ -13,7 +13,7 @@ await users.updateUser('user1', 'Peter', 'Poptart');
 await users.updateUser('user2', 'Troy', 'Mittens');
 await users.updateUser('user3', 'Lisa', 'Teresa');
 
-const event1 = await events.createEvent(
+await events.createEvent(
   'Social',
   'BBQ',
   'Come chill and eat burgers.',
@@ -23,7 +23,7 @@ const event1 = await events.createEvent(
   'user1'
 );
 
-const event2 = await events.createEvent(
+await events.createEvent(
   'Game Night',
   'Mario Kart',
   'Dusted off my wii, lets play some kart!',
@@ -33,7 +33,7 @@ const event2 = await events.createEvent(
   'user2'
 );
 
-const event3 = await events.createEvent(
+await events.createEvent(
   'Service',
   'Community Cleanup',
   'Let’s give back and clean the local park.',
@@ -58,6 +58,26 @@ await events.updateEventAppend(e1._id.toString(), 'attendees', 'user2');
 await events.updateEventAppend(e2._id.toString(), 'attendees', 'user3');
 await events.updateEventAppend(e3._id.toString(), 'attendees', 'user1');
 await events.updateEventAppend(e3._id.toString(), 'attendees', 'user2');
+
+await events.updateEventAppend(e1._id.toString(), 'comments', {
+  user: 'user2',
+  text: "Can't wait for burgers!",
+});
+await events.updateEventAppend(e2._id.toString(), 'comments', {
+  user: 'user3',
+  text: "I’m bringing my old GameCube controller!",
+});
+await events.updateEventAppend(e3._id.toString(), 'comments', {
+  user: 'user1',
+  text: "Let’s bring trash bags and gloves.",
+});
+
+await events.updateEventAppend(e1._id.toString(), 'reviews', {
+  user: 'user2',
+  rating: 5,
+  text: "Last year's BBQ was insane — I had five burgers!"
+});
+
 
 await users.mkfriends('user1', 'user2');
 await users.mkfriends('user1', 'user3');
