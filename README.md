@@ -8,3 +8,5 @@ Community Board
 - On Events page you can post, search for, rsvp to, like, and comment on events
 - On Friends you can post to a feed of all your friends as well as see, comment, and like friend's posts, there is also a friends list where you can add friends by username or remove friends. Clicking on a friend will bring you to their friend page consisting of all their friend posts.
 - Sign out will sign you out of your account
+
+repo: https://github.com/oldmansavva/CS546Final/tree/main
