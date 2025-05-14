@@ -4,6 +4,7 @@
   "description": "Final proj for da 546",
   "main": "mong.js",
   "scripts": {
+    "seed": "node seed.js",
     "start": "node app.js"
   },
   "type": "module",
@@ -26,5 +27,8 @@
     "express-session": "^1.18.1",
     "lodash": "^4.17.21",
     "mongodb": "^6.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.17"
   }
 }
