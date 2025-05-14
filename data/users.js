@@ -177,7 +177,7 @@ const getFFeed = async (uname) =>{
 
 const likePost = async (pid, comment = '--like', uid) =>{
     const uCol = await users();
-    //const cusr = await uCol.findOne({username: uid.toLowerCase()});
+    const cusr = await uCol.findOne({username: uid.toLowerCase()});
     const posts = await getFFeed(uid);
     let lpost = ld.find(posts, {_id : new ObjectId(pid)})
     let frnd = await uCol.findOne({_id : lpost.posterID})
@@ -212,7 +212,7 @@ const likePost = async (pid, comment = '--like', uid) =>{
     }else{
         let cd = new Date();
         let cdt = cd.getDate() + "/" + (cd.getMonth() + 1) + "/" + cd.getFullYear();
-        const ncom = {name : frnd.firstName + ' ' + frnd.lastName, postedDate : cdt, comment: comment}
+        const ncom = {name : cusr.firstName + ' ' + cusr.lastName, postedDate : cdt, comment: comment}
         lpost.comments.push(ncom);
         console.log('___')
         let allp = frnd.userPosts.filter(d => d._id.toString() !== pid);
